@@ -1,31 +1,19 @@
-﻿
-
-
-namespace DefaultNamespace
+﻿namespace DefaultNamespace
 {
     // for class 'List<T>'
     using System.Collections.Generic;
-    public class PipeElement : FlowElement
+    public class MixerElement : FlowElement
     {
         
-        PipeElement(MapHandler map, Position pos, bool openTop, bool openRight, bool openBottom, bool openLeft)
-        {
-            this(map, pos, null, openTop, openRight, openBottom, openLeft);
-        }
-        private Position sourcePos = null;
-
+        
         public bool TryFill(Position fromPos, LiquidBlob blob)
         {
-            this.content = blob;
-            this.sourcePos = fromPos;
-            if (null != this.content)
-            {
-                this.FlowFurther();
-            }
+            // TODO: implement me
+            // make it dependent on button press
         }
 
-        
-        private void FlowFurther()
+
+        public void FlowFurther()
         {
             List<GridElement> targets = this.GetTargets(true, true);
             
@@ -47,6 +35,5 @@ namespace DefaultNamespace
                 this.Clear();
             }
         }
-
     }
 }
