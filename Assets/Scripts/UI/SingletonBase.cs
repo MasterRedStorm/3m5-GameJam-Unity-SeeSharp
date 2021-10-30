@@ -16,6 +16,8 @@ public class SingletonBase<TInstance> : MonoBehaviour where TInstance : Componen
         }
 
         Instance = this as TInstance;
+
+        gameObject.transform.parent = null;
         DontDestroyOnLoad(gameObject);
     }
 }
