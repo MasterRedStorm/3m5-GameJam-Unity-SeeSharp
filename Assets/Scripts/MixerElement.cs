@@ -6,14 +6,14 @@
     {
         
         
-        public bool TryFill(Position fromPos, LiquidBlob blob)
+        public override bool TryFill(Position fromPos, LiquidBlob blob)
         {
             // TODO: implement me
             // make it dependent on button press
         }
 
 
-        public void FlowFurther()
+        public override void FlowFurther()
         {
             List<GridElement> targets = this.GetTargets(true, true);
             

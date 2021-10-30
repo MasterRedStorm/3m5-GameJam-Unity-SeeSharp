@@ -4,10 +4,10 @@ namespace DefaultNamespace
 {
     // for class 'List<T>'
     using System.Collections.Generic;
-    public class FlowElement : GridElement
+    public abstract class FlowElement : GridElement
     {
-        public virtual bool TryFill(Position fromPos, LiquidBlob blob);
-        public virtual void FlowFurther();
+        public abstract bool TryFill(Position fromPos, LiquidBlob blob);
+        public abstract void FlowFurther();
         
         private LiquidBlob content = null;
 
@@ -31,10 +31,10 @@ namespace DefaultNamespace
             get;
         } = false;
 
-        private MapHadler map;
+        private MapHandler map;
         
         private Position pos;
-        Position getPosition()
+        public Position GetPosition()
         {
             return this.pos;
         }
@@ -63,10 +63,10 @@ namespace DefaultNamespace
             int x = this.pos.GetX();
             int y = this.pos.GetY();
 
-            targets.add(map.GetElementAtPos(x, y - 1);
+            targets.add(map.GetElementAtPos(x, y - 1));
             targets.add(map.GetElementAtPos(x + 1, y));
             targets.add(map.GetElementAtPos(x, y + 1));
-            targets.add(map.GetElementAtPos(x - 1, y)));
+            targets.add(map.GetElementAtPos(x - 1, y));
 
             // remove invalid Targets
             for (int i = 0; i < targets.length; i++)
@@ -110,16 +110,16 @@ namespace DefaultNamespace
                     this.NullifyThatListElement(targets, 0);
                 if (null != targets.get(1) && !((FlowElement) targets.get(1)).getOpenLeft())
                     this.NullifyThatListElement(targets, 1);
-                if (null != targets.get(2) && !((FlowElement) targets.get(2)).getOpenTop()))
-                this.NullifyThatListElement(targets, 2);
-                if (null != targets.get(3) && !((FlowElement) targets.get(3)).getOpenBottom()))
-                this.NullifyThatListElement(targets, 3);
+                if (null != targets.get(2) && !((FlowElement) targets.get(2)).getOpenTop())
+					this.NullifyThatListElement(targets, 2);
+                if (null != targets.get(3) && !((FlowElement) targets.get(3)).getOpenBottom())
+					this.NullifyThatListElement(targets, 3);
             }
 
             return targets;
         }
         // utility function for GetTargets()
-        private void NullifyThatListElement(List<GridElement> list, index)
+        private void NullifyThatListElement(List<GridElement> list, int index)
         {
             list.RemoveAt(index);
             list.Insert(index, null);

@@ -14,7 +14,7 @@ namespace DefaultNamespace
         }
         private Position sourcePos = null;
 
-        public bool TryFill(Position fromPos, LiquidBlob blob)
+        public override bool TryFill(Position fromPos, LiquidBlob blob)
         {
             this.content = blob;
             this.sourcePos = fromPos;
@@ -25,7 +25,7 @@ namespace DefaultNamespace
         }
 
         
-        private void FlowFurther()
+        public override void FlowFurther()
         {
             List<GridElement> targets = this.GetTargets(true, true);
             

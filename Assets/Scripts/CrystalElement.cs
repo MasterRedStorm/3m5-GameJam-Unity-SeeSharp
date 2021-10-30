@@ -4,15 +4,16 @@
     using System.Collections.Generic;
     public class CrystalElement : FlowElement
     {
-        public bool TryFill(Position fromPos, LiquidBlob blob)
+        public override bool TryFill(Position fromPos, LiquidBlob blob)
         {
             //TODO: implement me
             
             // the real magic happens here
+			return false;
         }
 
         //non-sensical for this class
-        public void FlowFurther()
+        public override void FlowFurther()
         {
             return;
         }

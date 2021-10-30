@@ -1,7 +1,7 @@
 ﻿namespace DefaultNamespace
 {
     // for class 'List<T>'
-    using System.Collection.Generic;
+    using System.Collections.Generic;
     public class SourceElement : FlowElement
     {
         // A water tank or 'SourceElement' is never 'open'
@@ -11,11 +11,11 @@
         }
 
         // Nothing can flow into our water tank!
-        public bool TryFill()
+        public override bool TryFill(Position fromPos, LiquidBlob blob)
         {
             return false;
         }
-        public void FlowFurther()
+        public override void FlowFurther()
         {
             List<GridElement> targets = this.getTargets(false, true);
 
@@ -27,4 +27,5 @@
                 }
             }
         }
+	}
 }
