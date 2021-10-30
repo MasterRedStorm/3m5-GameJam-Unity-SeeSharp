@@ -5,7 +5,7 @@
     public class SourceElement : FlowElement
     {
         // A water tank or 'SourceElement' is never 'open'
-        SourceElement(MapHandler map, Position pos, LiquidBlob content)
+        public SourceElement(MapHandler map, Position pos, LiquidBlob content)
         {
             this(map, pos, content, false, false, false, false);
         }

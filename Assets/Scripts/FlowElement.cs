@@ -1,15 +1,16 @@
-﻿
+﻿// for class 'List<T>'
+using System.Collections.Generic;
 
 namespace DefaultNamespace
 {
-    // for class 'List<T>'
-    using System.Collections.Generic;
+
     public abstract class FlowElement : GridElement
     {
         public abstract bool TryFill(Position fromPos, LiquidBlob blob);
         public abstract void FlowFurther();
         
         private LiquidBlob content = null;
+		private Position sourcePos = null;
 
         bool OpenTop
         {
@@ -39,7 +40,7 @@ namespace DefaultNamespace
             return this.pos;
         }
 
-        FlowElement(MapHandler map, Position pos, LiquidBlob content, bool openTop, bool openRight, bool openBottom, bool openLeft)
+        public FlowElement(MapHandler map, Position pos, LiquidBlob content, bool openTop, bool openRight, bool openBottom, bool openLeft)
         {
             this.map = map;
             this.pos = pos;
@@ -60,26 +61,26 @@ namespace DefaultNamespace
          private List<GridElement> GetTargets(bool considerOwnOpenings, bool considerTargetOpenings)
         {
             List<GridElement> targets = new List<GridElement>();
-            int x = this.pos.GetX();
-            int y = this.pos.GetY();
+            int x = this.pos.x;
+            int y = this.pos.y;
 
-            targets.add(map.GetElementAtPos(x, y - 1));
-            targets.add(map.GetElementAtPos(x + 1, y));
-            targets.add(map.GetElementAtPos(x, y + 1));
-            targets.add(map.GetElementAtPos(x - 1, y));
+            targets.Add(map.GetElementAtPos(x, y - 1));
+            targets.Add(map.GetElementAtPos(x + 1, y));
+            targets.Add(map.GetElementAtPos(x, y + 1));
+            targets.Add(map.GetElementAtPos(x - 1, y));
 
             // remove invalid Targets
-            for (int i = 0; i < targets.length; i++)
+            for (int i = 0; i < targets.Count; i++)
             {
                 bool nullify = false;
                 // mark as null if the GridElement implements the FlowElement interface
-                if (!typeof(FlowElement).IsAssignableFrom(targets.get(i)))
+                if (targets[i] is FlowElement)
                 {
                     nullify = true;
                 }
 
                 // mark as null if target blob is equals the source blob
-                if (null != this.sourcePos && targets.get(i).getPosition.Equals(this.sourcePos.getPosition()))
+                if (null != this.sourcePos && targets[i].GetPosition().Equals(this.sourcePos))
                 {
                     nullify = true;
                 }
@@ -106,13 +107,13 @@ namespace DefaultNamespace
             {
                 // just check if it's not null
                 //   then we can safely cast to FlowElement
-                if (null != targets.get(0) && !((FlowElement) targets.get(0)).getOpenBottom())
+                if (null != targets[0] && !((FlowElement) targets[0]).OpenBottom)
                     this.NullifyThatListElement(targets, 0);
-                if (null != targets.get(1) && !((FlowElement) targets.get(1)).getOpenLeft())
+                if (null != targets[1] && !((FlowElement) targets[1]).OpenLeft)
                     this.NullifyThatListElement(targets, 1);
-                if (null != targets.get(2) && !((FlowElement) targets.get(2)).getOpenTop())
+                if (null != targets[2] && !((FlowElement) targets[2]).OpenTop)
 					this.NullifyThatListElement(targets, 2);
-                if (null != targets.get(3) && !((FlowElement) targets.get(3)).getOpenBottom())
+                if (null != targets[3] && !((FlowElement) targets[3]).OpenBottom)
 					this.NullifyThatListElement(targets, 3);
             }
 
@@ -121,8 +122,9 @@ namespace DefaultNamespace
         // utility function for GetTargets()
         private void NullifyThatListElement(List<GridElement> list, int index)
         {
-            list.RemoveAt(index);
-            list.Insert(index, null);
+			list[index] = null;
+            //list.RemoveAt(index);
+            //list.Insert(index, null);
         }
 
         public void Clear()

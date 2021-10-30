@@ -6,7 +6,7 @@
         private int width {
 			get;
 		}
-        private int heigh {
+        private int height {
 			get;
 		}
 		

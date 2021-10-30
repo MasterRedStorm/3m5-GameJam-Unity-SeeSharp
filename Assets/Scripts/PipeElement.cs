@@ -12,7 +12,6 @@ namespace DefaultNamespace
         {
             this(map, pos, null, openTop, openRight, openBottom, openLeft);
         }
-        private Position sourcePos = null;
 
         public override bool TryFill(Position fromPos, LiquidBlob blob)
         {
