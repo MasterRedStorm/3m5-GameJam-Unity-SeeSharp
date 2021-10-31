@@ -40,7 +40,12 @@ namespace DefaultNamespace
 		/// when TryFill() is called upon them, they immediatly call FlowFurther()
         /// </summary>
         /// <returns>nothing</returns>
-		public override void tick() {}
+		public override void tick() {
+            if (null != this.content)
+            {
+                this.FlowFurther();
+            }
+        }
 
 		// Pipe can always be filled
         public override bool TryFill(Position fromPos, LiquidBlob blob)
@@ -50,11 +55,7 @@ namespace DefaultNamespace
 			// flow further immediately.
 			//   if this is supposed to delay flowing slightly,
 			//   then this should be moved to method 'tick()' above
-            if (null != this.content)
-            {
-                this.FlowFurther();
-            }
-			return true;
+            return true;
         }
 
         

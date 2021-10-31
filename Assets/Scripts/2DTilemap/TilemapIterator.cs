@@ -29,6 +29,7 @@ public class TilemapIterator : MonoBehaviour
 {
     [SerializeField] private Tilemap tilemap;
     [SerializeField] private Tiles tileset;
+    [SerializeField] private GameController _gameController;
 
     private Dictionary<TileBase, CreateFn> dict = new ();
 
@@ -102,6 +103,8 @@ public class TilemapIterator : MonoBehaviour
                 }
             }
         }
+
+        _gameController.Initialize(flowElements);
     }
 
     private void CheckTile(TileBase tileBase, Vector3Int intPos)

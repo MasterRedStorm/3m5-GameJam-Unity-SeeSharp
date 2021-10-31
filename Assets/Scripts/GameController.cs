@@ -1,5 +1,6 @@
 //Time.deltaTime
 
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -23,13 +24,14 @@ class GameController : MonoBehaviour {
 	private double MIN_SECONDS_BETWEEN_TICKS = 0.1;
 	
 	
-	public void Initialize() {
+	public void Initialize(List<FlowElement> flowElements) {
 		// TODO: include Lars Wobus' Code in this method
+		tickableList.AddRange(flowElements);
 		
 		StartCoroutine("GameLoop");
 	}
 	
-	private IEnumerable<WaitForSeconds> GameLoop()
+	private IEnumerator GameLoop()
 	{
 		while(this.isRunning)
 		{
