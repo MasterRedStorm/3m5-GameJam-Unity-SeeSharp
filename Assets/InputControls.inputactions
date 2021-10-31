@@ -6,7 +6,7 @@
             "id": "0ca83225-b9bf-4dfb-8586-064c388249de",
             "actions": [
                 {
-                    "name": "Use",
+                    "name": "Interact",
                     "type": "Button",
                     "id": "ef66a6cd-062c-4513-a035-da51bcd125cf",
                     "expectedControlType": "Button",
@@ -32,7 +32,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Use",
+                    "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -43,7 +43,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Use",
+                    "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
