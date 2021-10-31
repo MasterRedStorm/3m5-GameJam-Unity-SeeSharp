@@ -2,7 +2,7 @@
 using UnityEngine;
 
 namespace DefaultNamespace {
-	public class GridElement : MonoBehaviour, MapElement {
+	public class GridElement : /*MonoBehaviour,*/ MapElement {
 		protected Position pos;
 		protected MapHandler map;
 		public Position GetPosition()
