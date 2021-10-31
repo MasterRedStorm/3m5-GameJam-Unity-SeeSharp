@@ -8,6 +8,23 @@ namespace DefaultNamespace {
 
 class GameController : MonoBehaviour {
 	
+	public static GameController theOneAndOnly;
+	
+	public GameController()
+	{
+		GameController.theOneAndOnly = this;
+	}
+	// should be called by Unity
+	public Start()
+	{
+		this.CrystalGoals = CrystalGoal.GenerateGoals();
+	}
+	public Update()
+	{
+	}
+	
+	public List<CrystalGoal> CrystalGoals = null;
+	
 	[SerializeField]
 	private List<Tickable> tickableList = new List<Tickable>();
 	
@@ -25,9 +42,14 @@ class GameController : MonoBehaviour {
 	
 	
 	public void Initialize(List<FlowElement> flowElements) {
-		// TODO: include Lars Wobus' Code in this method
-		tickableList.AddRange(flowElements);
+		GameController.theOneAndOnly = this;
 		
+		tickableList.AddRange(flowElements);
+	}
+	
+	public void run()
+	{
+		this.isRunning = true;
 		StartCoroutine("GameLoop");
 	}
 	

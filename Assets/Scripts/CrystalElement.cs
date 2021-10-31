@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Tilemaps;
+using System.Collections.Generic;
 
 namespace DefaultNamespace
 {
@@ -47,6 +48,13 @@ namespace DefaultNamespace
 		{
 			if(null != this.content)
 			{
+				//TODO:
+				// check if any of the needed liquid equals our content liquid
+				//List<LiquidBlob> remainingGoals = GameController.theOneAndOnly.liquidsForCrystal;
+				
+				
+				
+				
 				// from 0 (nothing) to 1000 (completed)
 				if(this.growthStage < CrystalElement.MAX_GROWTH_STAGE)
 				{
@@ -77,8 +85,6 @@ namespace DefaultNamespace
         {
 			this.content = blob;
 			
-            // TODO: figure out
-            // the real magic happens here
 			return true;
         }
 

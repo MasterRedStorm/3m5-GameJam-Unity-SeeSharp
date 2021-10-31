@@ -29,7 +29,9 @@ public class MainMenu : MonoBehaviour
         exitButton.onClick.AddListener(HandleExitButtonClick);
     }
 
-    private void HandlePlayButtonClick() => SceneHandler.Instance.LoadGameScene();
+    private void HandlePlayButtonClick() {
+		SceneHandler.Instance.LoadGameScene();
+	}
 
     private void HandleHelpButtonClick() => throw new NotImplementedException();
 
