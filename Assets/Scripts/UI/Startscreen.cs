@@ -18,6 +18,11 @@ public class Startscreen : MonoBehaviour
     [SerializeField] private AnimationCurve startscreenVisibility = AnimationCurve.EaseInOut(0,1,1,0);
     [SerializeField] private AnimationCurve titleScreenVisibility = AnimationCurve.EaseInOut(0,1,1,0);
 
+#if UNITY_EDITOR
+    [SerializeField]
+    private bool skipFadingAnimation;
+#endif
+    
     private float timePassed;
 
     private void Awake()
@@ -26,7 +31,22 @@ public class Startscreen : MonoBehaviour
         titleBackground.gameObject.SetActive(true);
     }
 
-    private void Start() => StartCoroutine(HideStartscreenOverlay());
+    private void Start()
+    {
+#if UNITY_EDITOR
+        if (!skipFadingAnimation)
+        {
+#endif
+            StartCoroutine(HideStartscreenOverlay());
+#if UNITY_EDITOR
+        }
+        else
+        {
+            startscreenOverlay.gameObject.SetActive(false);
+            titleBackground.gameObject.SetActive(false);
+        }
+#endif
+    }
 
     private IEnumerator HideStartscreenOverlay()
     {
