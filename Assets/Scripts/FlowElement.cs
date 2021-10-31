@@ -89,20 +89,20 @@ namespace DefaultNamespace
 
                 if (nullify)
                 {
-                    this.NullifyThatListElement(targets, i);
+                    targets[i] = null;
                 }
             }
 
             if (considerOwnOpenings)
             {
                 if (!this.OpenTop)
-                    this.NullifyThatListElement(targets, 0);
+                    targets[0] = null;
                 if (!this.OpenRight)
-                    this.NullifyThatListElement(targets, 1);
+                    targets[1] = null;
                 if (!this.OpenBottom)
-                    this.NullifyThatListElement(targets, 2);
+                    targets[2] = null;
                 if (!this.OpenLeft)
-                    this.NullifyThatListElement(targets, 3);
+                    targets[3] = null;
             }
 
             if (considerTargetOpenings)
@@ -110,26 +110,19 @@ namespace DefaultNamespace
                 // just check if it's not null
                 //   then we can safely cast to FlowElement
                 if (null != targets[0] && !((FlowElement) targets[0]).OpenBottom)
-                    this.NullifyThatListElement(targets, 0);
+                    targets[0] = null;
                 if (null != targets[1] && !((FlowElement) targets[1]).OpenLeft)
-                    this.NullifyThatListElement(targets, 1);
+                    targets[1] = null;
                 if (null != targets[2] && !((FlowElement) targets[2]).OpenTop)
-					this.NullifyThatListElement(targets, 2);
+                    targets[2] = null;
                 if (null != targets[3] && !((FlowElement) targets[3]).OpenBottom)
-					this.NullifyThatListElement(targets, 3);
+                    targets[3] = null;
             }
 
             return targets;
         }
-        // utility function for GetTargets()
-        protected void NullifyThatListElement(List<GridElement> list, int index)
-        {
-			list[index] = null;
-            //list.RemoveAt(index);
-            //list.Insert(index, null);
-        }
 
-        protected void Clear()
+         protected void Clear()
         {
             this.content = null;
             this.sourcePos = null;
