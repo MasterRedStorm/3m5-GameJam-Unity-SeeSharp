@@ -9,8 +9,8 @@ namespace DefaultNamespace
         public abstract bool TryFill(Position fromPos, LiquidBlob blob);
         public abstract void FlowFurther();
         
-        private LiquidBlob content = null;
-		private Position sourcePos = null;
+        public LiquidBlob content = null;
+		public Position sourcePos = null;
 
         bool OpenTop
         {
@@ -32,13 +32,8 @@ namespace DefaultNamespace
             get;
         } = false;
 
-        private MapHandler map;
+
         
-        private Position pos;
-        public Position GetPosition()
-        {
-            return this.pos;
-        }
 
         public FlowElement(MapHandler map, Position pos, LiquidBlob content, bool openTop, bool openRight, bool openBottom, bool openLeft)
         {
@@ -58,7 +53,7 @@ namespace DefaultNamespace
          /// <param name="considerOwnOpenings">whether to consider my own open variables</param>
          /// <param name="considerTargetOpenings">whether to consider the openings of the surrounding elements</param>
          /// <returns>a list containing 'null' wherever targets were invalid</returns>
-         private List<GridElement> GetTargets(bool considerOwnOpenings, bool considerTargetOpenings)
+         protected List<GridElement> GetTargets(bool considerOwnOpenings, bool considerTargetOpenings)
         {
             List<GridElement> targets = new List<GridElement>();
             int x = this.pos.x;
@@ -120,14 +115,14 @@ namespace DefaultNamespace
             return targets;
         }
         // utility function for GetTargets()
-        private void NullifyThatListElement(List<GridElement> list, int index)
+        protected void NullifyThatListElement(List<GridElement> list, int index)
         {
 			list[index] = null;
             //list.RemoveAt(index);
             //list.Insert(index, null);
         }
 
-        public void Clear()
+        protected void Clear()
         {
             this.content = null;
             this.sourcePos = null;

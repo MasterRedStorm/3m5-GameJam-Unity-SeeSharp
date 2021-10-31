@@ -5,9 +5,8 @@
     public class SourceElement : FlowElement
     {
         // A water tank or 'SourceElement' is never 'open'
-        public SourceElement(MapHandler map, Position pos, LiquidBlob content)
+        public SourceElement(MapHandler map, Position pos, LiquidBlob content) : base(map, pos, content, false, false, false, false)
         {
-            this(map, pos, content, false, false, false, false);
         }
 
         // Nothing can flow into our water tank!
@@ -17,13 +16,13 @@
         }
         public override void FlowFurther()
         {
-            List<GridElement> targets = this.getTargets(false, true);
+            List<GridElement> targets = base.getTargets(false, true);
 
             foreach (GridElement curTarget in targets)
             {
                 if(null != curTarget)
                 {
-                    ((FlowElement) curTarget).TryFill();
+                    ((FlowElement) curTarget).TryFill(this.pos, this.content);
                 }
             }
         }
