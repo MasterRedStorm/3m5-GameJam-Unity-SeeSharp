@@ -13,7 +13,7 @@ namespace DefaultNamespace
 		}
 		const int MAX_GROWTH_STAGE = 1000;
 		
-		public static CrystalElement CreateElement(Vector3Int intPos, Tilemap tilemap, MapHandler map)
+		public static CrystalElement CreateElement(Vector3Int intPos, Tilemap tilemap, MapHandler map, TilemapIterator iterator)
         {
             var topPos = new Vector3Int(intPos.x, intPos.y + 1, intPos.z);
             var rightPos = new Vector3Int(intPos.x + 1, intPos.y, intPos.z);
@@ -28,14 +28,17 @@ namespace DefaultNamespace
             return new CrystalElement(
                 map,
                 new Position(intPos),
+                iterator,
                 topOpen,
                 rightOpen,
                 bottomOpen,
                 leftOpen);
         }
         
-        protected CrystalElement(MapHandler map, Position pos, bool openTop, bool openRight, bool openBottom, bool openLeft) : base(map, pos, null, openTop, openRight, openBottom, openLeft)
+        protected CrystalElement(MapHandler map, Position pos, TilemapIterator iterator, bool openTop, bool openRight, bool openBottom, bool openLeft) : base(map, pos, null, openTop, openRight, openBottom, openLeft)
         {
+	        TilemapIterator = iterator;
+	        
 			// from 0 (nothing) to 1000 (completed)
 			this.growthStage = 0;
         }

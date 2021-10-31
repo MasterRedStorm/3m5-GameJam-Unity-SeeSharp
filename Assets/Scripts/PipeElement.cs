@@ -10,7 +10,7 @@ namespace DefaultNamespace
     using System.Collections.Generic;
     public class PipeElement : FlowElement
     {
-        public static PipeElement CreateElement(Vector3Int intPos, Tilemap tilemap, MapHandler map)
+        public static PipeElement CreateElement(Vector3Int intPos, Tilemap tilemap, MapHandler map, TilemapIterator iterator)
         {
             var topPos = new Vector3Int(intPos.x, intPos.y + 1, intPos.z);
             var rightPos = new Vector3Int(intPos.x + 1, intPos.y, intPos.z);
@@ -25,14 +25,16 @@ namespace DefaultNamespace
             return new PipeElement(
                 map,
                 new Position(intPos),
+                iterator,
                 topOpen,
                 rightOpen,
                 bottomOpen,
                 leftOpen);
         }
         
-        protected PipeElement(MapHandler map, Position pos, bool openTop, bool openRight, bool openBottom, bool openLeft) : base(map, pos, null, openTop, openRight, openBottom, openLeft)
+        protected PipeElement(MapHandler map, Position pos, TilemapIterator iterator, bool openTop, bool openRight, bool openBottom, bool openLeft) : base(map, pos, null, openTop, openRight, openBottom, openLeft)
         {
+            TilemapIterator = iterator;
         }
 		
         /// <summary>
@@ -44,6 +46,7 @@ namespace DefaultNamespace
             if (null != this.content)
             {
                 this.FlowFurther();
+                TilemapIterator.SwapTile(sourcePos);
             }
         }
 

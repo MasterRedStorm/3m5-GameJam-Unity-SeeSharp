@@ -8,7 +8,7 @@ namespace DefaultNamespace
     using System.Collections.Generic;
     public class SourceElement : FlowElement
     {
-        public static SourceElement CreateElement(Vector3Int intPos, Tilemap tilemap, MapHandler map)
+        public static SourceElement CreateElement(Vector3Int intPos, Tilemap tilemap, MapHandler map, TilemapIterator iterator)
         {
             /*var topPos = new Vector3Int(intPos.x, intPos.y + 1, intPos.z);
             var rightPos = new Vector3Int(intPos.x + 1, intPos.y, intPos.z);
@@ -24,12 +24,14 @@ namespace DefaultNamespace
             return new SourceElement(
                 map,
                 new Position(intPos),
-                new LiquidBlob()); // TODO what is liquid blob
+                new LiquidBlob(),
+                iterator);
         }
         
         // A water tank or 'SourceElement' is never 'open'
-        protected SourceElement(MapHandler map, Position pos, LiquidBlob content) : base(map, pos, content, false, false, false, false)
+        protected SourceElement(MapHandler map, Position pos, LiquidBlob content, TilemapIterator iterator) : base(map, pos, content, false, false, false, false)
         {
+            TilemapIterator = iterator;
         }
 
 		public override void tick()

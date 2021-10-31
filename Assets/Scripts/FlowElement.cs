@@ -12,6 +12,8 @@ namespace DefaultNamespace
         public abstract void FlowFurther();
 		public abstract void tick();
         
+        public TilemapIterator TilemapIterator { get; set; }
+        
         public LiquidBlob content = null;
 		public Position sourcePos = null;
 

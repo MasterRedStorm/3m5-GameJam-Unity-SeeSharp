@@ -36,48 +36,61 @@ public class TilemapIterator : MonoBehaviour
     private List<FlowElement> flowElements = new List<FlowElement>();
 
     private MapHandler _mapHandler;
-    private int _minX;
-    private int _minY;
+    private int _offsetX;
+    private int _offsetY;
+    private int _zLayer;
 
-#if UNITY_EDITOR
-    private bool swapTilesAtRuntime = false;
+//#if UNITY_EDITOR
+    //private bool swapTilesAtRuntime = false;
     
     [SerializeField] private Tiles debugTileset;
     private Dictionary<TileBase, TileBase> debugMap = new Dictionary<TileBase, TileBase>();
-#endif
+//#endif
 
     // Start is called before the first frame update 
     private void Start()
     {
-        dict.Add(tileset.crystal, (Vector3Int pos, Tilemap tm, MapHandler m) => CrystalElement.CreateElement(pos, tm, m));
-        dict.Add(tileset.mixer, (Vector3Int pos, Tilemap tm, MapHandler m) => MixerElement.CreateElement(pos, tm, m));
-        dict.Add(tileset.source, (Vector3Int pos, Tilemap tm, MapHandler m) => SourceElement.CreateElement(pos, tm, m));
-        dict.Add(tileset.pipe_straight, (Vector3Int pos, Tilemap tm, MapHandler m) => PipeElement.CreateElement(pos, tm, m));
-        dict.Add(tileset.pipe_bridge, (Vector3Int pos, Tilemap tm, MapHandler m) => PipeElement.CreateElement(pos, tm, m));
-        dict.Add(tileset.pipe_curve, (Vector3Int pos, Tilemap tm, MapHandler m) => PipeElement.CreateElement(pos, tm, m));
-        dict.Add(tileset.pipe_t, (Vector3Int pos, Tilemap tm, MapHandler m) => PipeElement.CreateElement(pos, tm, m));
-        dict.Add(tileset.pipe_cross, (Vector3Int pos, Tilemap tm, MapHandler m) => PipeElement.CreateElement(pos, tm, m));
+        dict.Add(tileset.crystal, (Vector3Int pos, Tilemap tm, MapHandler m) => CrystalElement.CreateElement(pos, tm, m, this));
+        dict.Add(tileset.mixer, (Vector3Int pos, Tilemap tm, MapHandler m) => MixerElement.CreateElement(pos, tm, m, this));
+        dict.Add(tileset.source, (Vector3Int pos, Tilemap tm, MapHandler m) => SourceElement.CreateElement(pos, tm, m, this));
+        dict.Add(tileset.pipe_straight, (Vector3Int pos, Tilemap tm, MapHandler m) => PipeElement.CreateElement(pos, tm, m, this));
+        dict.Add(tileset.pipe_bridge, (Vector3Int pos, Tilemap tm, MapHandler m) => PipeElement.CreateElement(pos, tm, m, this));
+        dict.Add(tileset.pipe_curve, (Vector3Int pos, Tilemap tm, MapHandler m) => PipeElement.CreateElement(pos, tm, m, this));
+        dict.Add(tileset.pipe_t, (Vector3Int pos, Tilemap tm, MapHandler m) => PipeElement.CreateElement(pos, tm, m, this));
+        dict.Add(tileset.pipe_cross, (Vector3Int pos, Tilemap tm, MapHandler m) => PipeElement.CreateElement(pos, tm, m, this));
 
-        debugMap.Add(tileset.crystal, debugTileset.crystal);
-        debugMap.Add(tileset.mixer, debugTileset.mixer);
-        debugMap.Add(tileset.source, debugTileset.source);
+        //debugMap.Add(tileset.crystal, debugTileset.crystal);
+        //debugMap.Add(tileset.mixer, debugTileset.mixer);
+        //debugMap.Add(tileset.source, debugTileset.source);
         debugMap.Add(tileset.pipe_straight, debugTileset.pipe_straight);
-        debugMap.Add(tileset.pipe_bridge, debugTileset.pipe_bridge);
+        //debugMap.Add(tileset.pipe_bridge, debugTileset.pipe_bridge);
         debugMap.Add(tileset.pipe_curve, debugTileset.pipe_curve);
         debugMap.Add(tileset.pipe_t, debugTileset.pipe_t);
         debugMap.Add(tileset.pipe_cross, debugTileset.pipe_cross);
+        
+        //debugMap.Add(debugTileset.crystal, tileset.crystal);
+        //debugMap.Add(debugTileset.mixer, tileset.mixer);
+        //debugMap.Add(debugTileset.source, tileset.source);
+        debugMap.Add(debugTileset.pipe_straight, tileset.pipe_straight);
+        //debugMap.Add(debugTileset.pipe_bridge, tileset.pipe_bridge);
+        debugMap.Add(debugTileset.pipe_curve, tileset.pipe_curve);
+        debugMap.Add(debugTileset.pipe_t, tileset.pipe_t);
+        debugMap.Add(debugTileset.pipe_cross, tileset.pipe_cross);
 
         var cellBounds = tilemap.cellBounds;
         
         var size = cellBounds.size;
         _mapHandler = new MapHandler(size.x, size.y);
-        _minX = cellBounds.min.x;
-        _minY = cellBounds.min.y;
         
+        var minX = cellBounds.min.x;
+        var minY = cellBounds.min.y;
         
-        for (var x = _minX; x < cellBounds.max.x; x++)
+        _offsetX = -minX;
+        _offsetY = -minY;
+
+        for (var x = minX; x < cellBounds.max.x; x++)
         {
-            for (var y = _minY; y < cellBounds.max.y; y++)
+            for (var y = minY; y < cellBounds.max.y; y++)
             {
                 for (var z = cellBounds.min.z; z < cellBounds.max.z; z++)
                 {
@@ -90,14 +103,14 @@ public class TilemapIterator : MonoBehaviour
                         continue;
                     }
 
-#if UNITY_EDITOR
+/*#if UNITY_EDITOR
                     if (swapTilesAtRuntime &&
                         debugMap.ContainsKey(tileBase) &&
                         tileBase != debugMap[tileBase])
                     {
                         tilemap.SwapTile(tileBase, debugMap[tileBase]);
                     }
-#endif
+#endif*/
 
                     CheckTile(tileBase, intPos);
                 }
@@ -122,12 +135,26 @@ public class TilemapIterator : MonoBehaviour
     private void AddFlowElement(Vector3Int intPos, CreateFn createElement)
     {
         var eulers = tilemap.GetTransformMatrix(intPos).rotation.eulerAngles;
-
-        var offsetX = _minX < 0 ? -_minX : _minX;
-        var offsetY = _minY < 0 ? -_minY : _minY;
-        intPos.x += offsetX;
-        intPos.y += offsetY;
+        
+        intPos.x += _offsetX;
+        intPos.y += _offsetY;
         var element = createElement(intPos, tilemap, _mapHandler);
         flowElements.Add(element);
+    }
+
+    public void SwapTile(Position position)
+    {
+        var intPos = new Vector3Int(
+            position.x - _offsetX,
+            position.x - _offsetX,
+            0);
+        
+        var tileBase = tilemap.GetTile(intPos);
+
+        if (debugMap.ContainsKey(tileBase) &&
+            tileBase != debugMap[tileBase])
+        {
+            tilemap.SwapTile(tileBase, debugMap[tileBase]);
+        }
     }
 }
