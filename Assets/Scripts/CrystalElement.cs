@@ -19,7 +19,13 @@ namespace DefaultNamespace
             var bottomOpen = tilemap.GetTile(bottomPos);
             var leftOpen = tilemap.GetTile(leftPos);
 
-            return new CrystalElement(null, null, topOpen, rightOpen, bottomOpen, leftOpen);
+            return new CrystalElement(
+                null,
+                new Position(intPos),
+                topOpen,
+                rightOpen,
+                bottomOpen,
+                leftOpen);
         }
         
         protected CrystalElement(MapHandler map, Position pos, bool openTop, bool openRight, bool openBottom, bool openLeft) : base(map, pos, null, openTop, openRight, openBottom, openLeft)

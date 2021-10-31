@@ -20,7 +20,10 @@ namespace DefaultNamespace
             var leftOpen = tilemap.GetTile(leftPos);
 
             return new SourceElement(map, pos, topOpen, rightOpen, bottomOpen, leftOpen);*/
-            return new SourceElement(null, null, null); // TODO what is liquid blob
+            return new SourceElement(
+                null,
+                new Position(intPos),
+                null); // TODO what is liquid blob
         }
         
         // A water tank or 'SourceElement' is never 'open'
