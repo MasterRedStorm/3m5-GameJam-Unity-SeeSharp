@@ -1,8 +1,5 @@
-
-using UnityEngine;
-
 namespace DefaultNamespace {
-	public abstract class GridElement : MonoBehaviour, MapElement {
+	public class GridElement : MapElement {
 		protected Position pos;
 		protected MapHandler map;
 		public Position GetPosition()

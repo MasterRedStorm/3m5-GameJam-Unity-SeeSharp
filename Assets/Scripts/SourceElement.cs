@@ -1,11 +1,34 @@
-﻿namespace DefaultNamespace
+﻿using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.Tilemaps;
+
+namespace DefaultNamespace
 {
     // for class 'List<T>'
     using System.Collections.Generic;
     public class SourceElement : FlowElement
     {
+        public static SourceElement CreateElement(Vector3Int intPos, Tilemap tilemap, MapHandler map)
+        {
+            /*var topPos = new Vector3Int(intPos.x, intPos.y + 1, intPos.z);
+            var rightPos = new Vector3Int(intPos.x + 1, intPos.y, intPos.z);
+            var bottomPos = new Vector3Int(intPos.x, intPos.y - 1, intPos.z);
+            var leftPos = new Vector3Int(intPos.x - 1, intPos.y, intPos.z);
+
+            var topOpen = tilemap.GetTile(topPos);
+            var rightOpen = tilemap.GetTile(rightPos);
+            var bottomOpen = tilemap.GetTile(bottomPos);
+            var leftOpen = tilemap.GetTile(leftPos);
+
+            return new SourceElement(map, pos, topOpen, rightOpen, bottomOpen, leftOpen);*/
+            return new SourceElement(
+                map,
+                new Position(intPos),
+                new LiquidBlob()); // TODO what is liquid blob
+        }
+        
         // A water tank or 'SourceElement' is never 'open'
-        public SourceElement(MapHandler map, Position pos, LiquidBlob content) : base(map, pos, content, false, false, false, false)
+        protected SourceElement(MapHandler map, Position pos, LiquidBlob content) : base(map, pos, content, false, false, false, false)
         {
         }
 
@@ -27,7 +50,7 @@
             {
                 if(null != curTarget)
                 {
-                    ((FlowElement) curTarget).TryFill(this.pos, this.content);
+                    ((FlowElement) curTarget).TryFill(this.pos, this.content.Clone());
                 }
             }
         }

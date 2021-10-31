@@ -1,4 +1,6 @@
-﻿namespace DefaultNamespace
+﻿using UnityEngine;
+
+namespace DefaultNamespace
 {
     public class Position
     {
@@ -19,6 +21,8 @@
 			this.x = x;
 			this.y = y;
 		}
+
+		public Position(Vector3Int pos) : this(pos.x, pos.y) {}
 
         public bool Equals(Position otherPos) {
 			if(this.x == otherPos.x

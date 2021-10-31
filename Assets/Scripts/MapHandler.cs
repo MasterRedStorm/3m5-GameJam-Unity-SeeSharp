@@ -10,7 +10,7 @@
 			get;
 		}
 		
-        MapHandler(int width, int height)
+        public MapHandler(int width, int height)
         {
             this.width = width;
             this.height = height;
