@@ -7,11 +7,15 @@
         MixerElement(MapHandler map, Position pos, bool openTop, bool openRight, bool openBottom, bool openLeft) : base(map, pos, null, openTop, openRight, openBottom, openLeft)
         {
         }
+		
+		public override void tick()
+		{
+			this.FlowFurther();
+		}
         
         public override bool TryFill(Position fromPos, LiquidBlob blob)
         {
-            // TODO: implement me
-            // make it dependent on button press!
+            // TODO: make it dependent on button press!
 			
 			if(null != this.content)
 			{

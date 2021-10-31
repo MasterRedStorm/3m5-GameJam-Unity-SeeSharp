@@ -11,12 +11,22 @@ namespace DefaultNamespace
         PipeElement(MapHandler map, Position pos, bool openTop, bool openRight, bool openBottom, bool openLeft) : base(map, pos, null, openTop, openRight, openBottom, openLeft)
         {
         }
+		
+        /// <summary>
+        /// Pipes don't care about ticking.
+		/// when TryFill() is called upon them, they immediatly call FlowFurther()
+        /// </summary>
+        /// <returns>nothing</returns>
+		public override void tick() {}
 
 		// Pipe can always be filled
         public override bool TryFill(Position fromPos, LiquidBlob blob)
         {
             this.content = blob;
             this.sourcePos = fromPos;
+			// flow further immediately.
+			//   if this is supposed to delay flowing slightly,
+			//   then this should be moved to method 'tick()' above
             if (null != this.content)
             {
                 this.FlowFurther();

@@ -9,6 +9,11 @@
         {
         }
 
+		public override void tick()
+		{
+			this.FlowFurther();
+		}
+
         // Nothing can flow into our water tank!
         public override bool TryFill(Position fromPos, LiquidBlob blob)
         {
