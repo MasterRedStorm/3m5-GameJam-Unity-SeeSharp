@@ -1,9 +1,15 @@
-﻿namespace DefaultNamespace
+﻿using UnityEngine;
+
+namespace DefaultNamespace
 {
     // for class 'Color'
-    using System.Drawing;
     public class LiquidBlob
     {
+	    public LiquidBlob Clone()
+	    {
+		    return new LiquidBlob();
+	    }
+	    
         private Color color
         {
             get;
@@ -13,11 +19,11 @@
 		//        setting this color to the average values of both colors?
 		public void MixBlob(LiquidBlob otherBlob)
 		{
-			int R = (this.color.R + otherBlob.color.R) / 2;
-			int G = (this.color.G + otherBlob.color.G) / 2;
-			int B = (this.color.B + otherBlob.color.B) / 2;
+			float R = (this.color.r + otherBlob.color.r) / 2;
+			float G = (this.color.g + otherBlob.color.g) / 2;
+			float B = (this.color.b + otherBlob.color.b) / 2;
 
-			this.color = Color.FromArgb(R, G, B);
+			this.color = new Color(R, G, B);
 		}
     }
 }

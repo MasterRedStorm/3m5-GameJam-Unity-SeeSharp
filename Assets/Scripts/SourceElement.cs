@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Unity.VisualScripting;
+using UnityEngine;
 using UnityEngine.Tilemaps;
 
 namespace DefaultNamespace
@@ -23,7 +24,7 @@ namespace DefaultNamespace
             return new SourceElement(
                 map,
                 new Position(intPos),
-                null); // TODO what is liquid blob
+                new LiquidBlob()); // TODO what is liquid blob
         }
         
         // A water tank or 'SourceElement' is never 'open'
@@ -44,7 +45,7 @@ namespace DefaultNamespace
             {
                 if(null != curTarget)
                 {
-                    ((FlowElement) curTarget).TryFill(this.pos, this.content);
+                    ((FlowElement) curTarget).TryFill(this.pos, this.content.Clone());
                 }
             }
         }
