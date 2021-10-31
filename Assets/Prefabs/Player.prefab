@@ -241,7 +241,19 @@ MonoBehaviour:
       m_Calls: []
   m_ActionEvents:
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2420812664826425399}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: ef66a6cd-062c-4513-a035-da51bcd125cf
     m_ActionName: PlayerGamepad/Use[/XInputControllerWindows/buttonSouth]
   - m_PersistentCalls:
@@ -261,7 +273,7 @@ MonoBehaviour:
     m_ActionId: efe71dc8-e5c2-4e9a-8b83-f57623a9c650
     m_ActionName: PlayerGamepad/Movement[/XInputControllerWindows/leftStick,/XInputControllerWindows/dpad]
   m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: GamePad
+  m_DefaultControlScheme: 
   m_DefaultActionMap: PlayerGamepad
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
