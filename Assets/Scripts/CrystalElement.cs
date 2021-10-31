@@ -8,8 +8,8 @@
 		int growthStage {
 			get;
 			set;
-		};
-		static const int MAX_GROWTH_STAGE = 1000;
+		}
+		const int MAX_GROWTH_STAGE = 1000;
 		CrystalElement(MapHandler map, Position pos, bool openTop, bool openRight, bool openBottom, bool openLeft) : base(map, pos, null, openTop, openRight, openBottom, openLeft)
         {
 			// from 0 (nothing) to 1000 (completed)

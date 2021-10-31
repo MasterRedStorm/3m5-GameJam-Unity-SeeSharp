@@ -3,6 +3,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+namespace DefaultNamespace {
+
 class GameController : MonoBehaviour {
 	
 	[SerializeField]
@@ -27,17 +29,29 @@ class GameController : MonoBehaviour {
 		StartCoroutine("GameLoop");
 	}
 	
-	private void GameLoop()
+	private IEnumerable<WaitForSeconds> GameLoop()
 	{
 		while(this.isRunning)
 		{
-			if()
-			foreach(Tickable curTickable in this.tickableList)
+			if(1 == Time.timeScale)
 			{
-				curTickable.tick();
+				double curTime = Time.timeSinceLevelLoadAsDouble;
+				double deltaSinceLastRun = curTime - this.lastTickTime;
+				if(deltaSinceLastRun >= MIN_SECONDS_BETWEEN_TICKS)
+				{
+					foreach(Tickable curTickable in this.tickableList)
+					{
+						curTickable.tick();
+					}
+					this.lastTickTime = curTime;
+				}
+				
 			}
-			//TODO: search the respective wait/sleep method
-			//sleep(MIN_SECONDS_BETWEEN_TICKS);
+
+			// wait a little
+			yield return new WaitForSeconds((float) MIN_SECONDS_BETWEEN_TICKS);
 		}
 	}
+}
+
 }
