@@ -14,12 +14,15 @@ public class PlayerMovement : MonoBehaviour
     public Transform interactor;
     private Vector2 movement;
     
+    
     // Update is called once per frame
     void Update()
     {
         // handle input
         movement.x = Input.GetAxisRaw("Horizontal"); // todo see if new unity input system is good and replace this if necessary
         movement.y = Input.GetAxisRaw("Vertical");
+        
+        
         
         animator.SetFloat("Horizontal", movement.x);
         animator.SetFloat("Vertical", movement.y);
