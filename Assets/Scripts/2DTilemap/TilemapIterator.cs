@@ -6,7 +6,11 @@ using UnityEngine.Tilemaps;
 using System;
 using DefaultNamespace;
 
-using CreateFn = System.Func<UnityEngine.Vector3Int, UnityEngine.Tilemaps.Tilemap, DefaultNamespace.FlowElement>;
+using CreateFn = System.Func<
+    UnityEngine.Vector3Int,
+    UnityEngine.Tilemaps.Tilemap,
+    DefaultNamespace.MapHandler,
+    DefaultNamespace.FlowElement>;
 
 [Serializable]
 public class Tiles
@@ -30,6 +34,10 @@ public class TilemapIterator : MonoBehaviour
 
     private List<FlowElement> flowElements = new List<FlowElement>();
 
+    private MapHandler _mapHandler;
+    private int _minX;
+    private int _minY;
+
 #if UNITY_EDITOR
     private bool swapTilesAtRuntime = false;
     
@@ -40,14 +48,14 @@ public class TilemapIterator : MonoBehaviour
     // Start is called before the first frame update 
     private void Start()
     {
-        dict.Add(tileset.crystal, (Vector3Int pos, Tilemap tm) => CrystalElement.CreateElement(pos, tm));
-        dict.Add(tileset.mixer, (Vector3Int pos, Tilemap tm) => MixerElement.CreateElement(pos, tm));
-        dict.Add(tileset.source, (Vector3Int pos, Tilemap tm) => SourceElement.CreateElement(pos, tm));
-        dict.Add(tileset.pipe_straight, (Vector3Int pos, Tilemap tm) => PipeElement.CreateElement(pos, tm));
-        dict.Add(tileset.pipe_bridge, (Vector3Int pos, Tilemap tm) => PipeElement.CreateElement(pos, tm));
-        dict.Add(tileset.pipe_curve, (Vector3Int pos, Tilemap tm) => PipeElement.CreateElement(pos, tm));
-        dict.Add(tileset.pipe_t, (Vector3Int pos, Tilemap tm) => PipeElement.CreateElement(pos, tm));
-        dict.Add(tileset.pipe_cross, (Vector3Int pos, Tilemap tm) => PipeElement.CreateElement(pos, tm));
+        dict.Add(tileset.crystal, (Vector3Int pos, Tilemap tm, MapHandler m) => CrystalElement.CreateElement(pos, tm, m));
+        dict.Add(tileset.mixer, (Vector3Int pos, Tilemap tm, MapHandler m) => MixerElement.CreateElement(pos, tm, m));
+        dict.Add(tileset.source, (Vector3Int pos, Tilemap tm, MapHandler m) => SourceElement.CreateElement(pos, tm, m));
+        dict.Add(tileset.pipe_straight, (Vector3Int pos, Tilemap tm, MapHandler m) => PipeElement.CreateElement(pos, tm, m));
+        dict.Add(tileset.pipe_bridge, (Vector3Int pos, Tilemap tm, MapHandler m) => PipeElement.CreateElement(pos, tm, m));
+        dict.Add(tileset.pipe_curve, (Vector3Int pos, Tilemap tm, MapHandler m) => PipeElement.CreateElement(pos, tm, m));
+        dict.Add(tileset.pipe_t, (Vector3Int pos, Tilemap tm, MapHandler m) => PipeElement.CreateElement(pos, tm, m));
+        dict.Add(tileset.pipe_cross, (Vector3Int pos, Tilemap tm, MapHandler m) => PipeElement.CreateElement(pos, tm, m));
 
         debugMap.Add(tileset.crystal, debugTileset.crystal);
         debugMap.Add(tileset.mixer, debugTileset.mixer);
@@ -59,10 +67,16 @@ public class TilemapIterator : MonoBehaviour
         debugMap.Add(tileset.pipe_cross, debugTileset.pipe_cross);
 
         var cellBounds = tilemap.cellBounds;
-        Debug.Log(cellBounds);
-        for (var x = cellBounds.min.x; x < cellBounds.max.x; x++)
+        
+        var size = cellBounds.size;
+        _mapHandler = new MapHandler(size.x, size.y);
+        _minX = cellBounds.min.x;
+        _minY = cellBounds.min.y;
+        
+        
+        for (var x = _minX; x < cellBounds.max.x; x++)
         {
-            for (var y = cellBounds.min.y; y < cellBounds.max.y; y++)
+            for (var y = _minY; y < cellBounds.max.y; y++)
             {
                 for (var z = cellBounds.min.z; z < cellBounds.max.z; z++)
                 {
@@ -105,7 +119,12 @@ public class TilemapIterator : MonoBehaviour
     private void AddFlowElement(Vector3Int intPos, CreateFn createElement)
     {
         var eulers = tilemap.GetTransformMatrix(intPos).rotation.eulerAngles;
-        var element = createElement(intPos, tilemap);
+
+        var offsetX = _minX < 0 ? -_minX : _minX;
+        var offsetY = _minY < 0 ? -_minY : _minY;
+        intPos.x += offsetX;
+        intPos.y += offsetY;
+        var element = createElement(intPos, tilemap, _mapHandler);
         flowElements.Add(element);
     }
 }

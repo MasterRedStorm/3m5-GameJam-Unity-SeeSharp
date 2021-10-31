@@ -7,7 +7,7 @@ namespace DefaultNamespace
     using System.Collections.Generic;
     public class SourceElement : FlowElement
     {
-        public static SourceElement CreateElement(Vector3Int intPos, Tilemap tilemap)
+        public static SourceElement CreateElement(Vector3Int intPos, Tilemap tilemap, MapHandler map)
         {
             /*var topPos = new Vector3Int(intPos.x, intPos.y + 1, intPos.z);
             var rightPos = new Vector3Int(intPos.x + 1, intPos.y, intPos.z);
@@ -21,7 +21,7 @@ namespace DefaultNamespace
 
             return new SourceElement(map, pos, topOpen, rightOpen, bottomOpen, leftOpen);*/
             return new SourceElement(
-                null,
+                map,
                 new Position(intPos),
                 null); // TODO what is liquid blob
         }
