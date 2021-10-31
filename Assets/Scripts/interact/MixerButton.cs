@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class Button : MonoBehaviour
+public class MixerButton : MonoBehaviour
 {
     public Action ButtonPressBegin;
     public Action ButtonPressEnd;

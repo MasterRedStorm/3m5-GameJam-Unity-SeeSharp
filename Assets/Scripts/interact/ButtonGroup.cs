@@ -9,7 +9,7 @@ public class ButtonGroup
     public Action DisableAction;
     
     [SerializeField]
-    private List<Button> buttons;
+    private List<MixerButton> buttons;
 
     [SerializeField]
     private int requiredButtonsToPress;
