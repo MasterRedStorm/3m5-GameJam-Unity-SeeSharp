@@ -12,6 +12,7 @@ namespace DefaultNamespace
         {
         }
 
+		// Pipe can always be filled
         public override bool TryFill(Position fromPos, LiquidBlob blob)
         {
             this.content = blob;
@@ -20,6 +21,7 @@ namespace DefaultNamespace
             {
                 this.FlowFurther();
             }
+			return true;
         }
 
         

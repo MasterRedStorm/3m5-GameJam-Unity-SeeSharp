@@ -14,7 +14,7 @@
         {
             this.width = width;
             this.height = height;
-            this.field = GridElement[width * height];
+            this.field = new GridElement[width * height];
         }
 
 

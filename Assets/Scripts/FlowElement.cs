@@ -36,9 +36,8 @@ namespace DefaultNamespace
         
 
         public FlowElement(MapHandler map, Position pos, LiquidBlob content, bool openTop, bool openRight, bool openBottom, bool openLeft)
+		: base (map, pos)
         {
-            this.map = map;
-            this.pos = pos;
             this.OpenTop = openTop;
             this.OpenRight = openRight;
             this.OpenBottom = openBottom;

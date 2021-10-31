@@ -4,12 +4,24 @@
     using System.Collections.Generic;
     public class MixerElement : FlowElement
     {
-        
+        MixerElement(MapHandler map, Position pos, bool openTop, bool openRight, bool openBottom, bool openLeft) : base(map, pos, null, openTop, openRight, openBottom, openLeft)
+        {
+        }
         
         public override bool TryFill(Position fromPos, LiquidBlob blob)
         {
             // TODO: implement me
-            // make it dependent on button press
+            // make it dependent on button press!
+			
+			if(null != this.content)
+			{
+				this.content.MixBlob(blob);
+			} else
+			{
+				this.content = null;
+			}
+			// TODO: Reconsider this
+			return true;
         }
 
 

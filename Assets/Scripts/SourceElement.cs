@@ -16,7 +16,7 @@
         }
         public override void FlowFurther()
         {
-            List<GridElement> targets = base.getTargets(false, true);
+            List<GridElement> targets = base.GetTargets(false, true);
 
             foreach (GridElement curTarget in targets)
             {
