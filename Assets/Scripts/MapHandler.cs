@@ -20,7 +20,7 @@
 
         public GridElement GetElementAtPos(int x, int y)
         {
-            if (x >= 0 && x < this.height)
+            if (x >= 0 && x < this.width)
             {
                 if (y >= 0 && y < this.height)
                 {
