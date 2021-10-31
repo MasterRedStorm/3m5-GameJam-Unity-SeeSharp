@@ -142,14 +142,19 @@ public class TilemapIterator : MonoBehaviour
         flowElements.Add(element);
     }
 
-    public void SwapTile(Position position)
+    public TileBase GetTile(Position position)
     {
         var intPos = new Vector3Int(
             position.x - _offsetX,
             position.x - _offsetX,
             0);
-        
-        var tileBase = tilemap.GetTile(intPos);
+
+        return tilemap.GetTile(intPos);
+    }
+
+    public void SwapTile(Position position)
+    {
+        var tileBase = GetTile(position);
 
         if (debugMap.ContainsKey(tileBase) &&
             tileBase != debugMap[tileBase])

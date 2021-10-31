@@ -49,6 +49,7 @@ namespace DefaultNamespace
             this.OpenLeft = openLeft;
 
             this.content = content;
+            map.SetElement(pos, this);
 
         }
         

@@ -1,4 +1,6 @@
-﻿namespace DefaultNamespace
+﻿using UnityEditor.Compilation;
+
+namespace DefaultNamespace
 {
     public class MapHandler
     {
@@ -17,14 +19,18 @@
             this.field = new GridElement[width * height];
         }
 
-
+        public void SetElement(Position pos, GridElement el)
+        {
+            this.field[pos.x * height + pos.y] = el;
+        }
+        
         public GridElement GetElementAtPos(int x, int y)
         {
             if (x >= 0 && x < this.width)
             {
                 if (y >= 0 && y < this.height)
                 {
-                    return this.field[y * width + x];
+                    return this.field[x * height +y];
                 }
             }
 
