@@ -47,7 +47,9 @@ namespace DefaultNamespace
             this.OpenRight = openRight;
             this.OpenBottom = openBottom;
             this.OpenLeft = openLeft;
-            
+
+            this.content = content;
+
         }
         
 
