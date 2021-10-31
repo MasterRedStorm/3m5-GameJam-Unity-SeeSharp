@@ -4,10 +4,11 @@ using System.Collections.Generic;
 namespace DefaultNamespace
 {
 
-    public abstract class FlowElement : GridElement
+    public abstract class FlowElement : GridElement, Tickable
     {
         public abstract bool TryFill(Position fromPos, LiquidBlob blob);
         public abstract void FlowFurther();
+		public abstract void tick();
         
         public LiquidBlob content = null;
 		public Position sourcePos = null;
